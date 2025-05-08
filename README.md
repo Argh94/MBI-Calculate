@@ -16,8 +16,8 @@
 
 ---
 
-## پیش‌نمایش
-![پیش‌نمایش ابزار](https://argh94.github.io/MBI-Calculate/)
+## برای استفاده انلاین به سایت زیر مراجعه کنید 
+https://argh94.github.io/MBI-Calculate/
 
 ---
 
