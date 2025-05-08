@@ -63,6 +63,6 @@ https://argh94.github.io/MBI-Calculate/
 
 ## تماس با من
 [![GitHub](https://img.shields.io/badge/GitHub-Argh94-blue?logo=github)](https://github.com/Argh94)
-[![Email](https://img.shields.io/badge/Email-Contact-orange?logo=gmail)](mailto:your-email@example.com)
+[![Email](https://img.shields.io/badge/Email-Contact-orange?logo=gmail)](mailto:your-Argh7394@gmail.com)
 
 
