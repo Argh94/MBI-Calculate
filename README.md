@@ -17,7 +17,7 @@
 ---
 
 ## پیش‌نمایش
-![پیش‌نمایش ابزار](https://via.placeholder.com/800x400.png?text=Preview+Image+BMI+Calculator)
+![پیش‌نمایش ابزار](https://argh94.github.io/MBI-Calculate/)
 
 ---
 
