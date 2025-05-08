@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>محاسبه BMI</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.0/Vazirmatn-font-face.css">
+  <style>
+    body {
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .container {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 32px 28px 24px 28px;
+      width: 340px;
+      max-width: 100%;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .bmi-info {
+      margin: 20px;
+      background: #f9fafc;
+      border-radius: 10px;
+      padding: 18px 14px;
+      color: #333;
+      font-size: 15.5px;
+      line-height: 2;
+      width: 340px;
+      max-width: 100%;
+      text-align: right;
+    }
+    h2 {
+      color: #3a7bd5;
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      margin: 14px 0 6px 0;
+      color: #444;
+      font-size: 15px;
+      text-align: right;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #b2bec3;
+      border-radius: 7px;
+      font-size: 15px;
+      margin-bottom: 4px;
+      box-sizing: border-box;
+      transition: border 0.2s;
+    }
+    input[type="number"]:focus {
+      border: 1.5px solid #3a7bd5;
+      outline: none;
+    }
+    button {
+      background: linear-gradient(90deg, #3a7bd5 0%, #00d2ff 100%);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 10px 0;
+      width: 100%;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 18px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
+    }
+    #result {
+      margin-top: 22px;
+      font-size: 17px;
+      color: #222;
+      background: #f1f8ff;
+      border-radius: 7px;
+      padding: 14px;
+      min-height: 32px;
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(58,123,213,0.07);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #result.show {
+      opacity: 1;
+    }
+    .sticker {
+      width: 100px;
+      margin: 10px auto;
+      display: block;
+    }
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 8px;
+      border: 1px solid #b2bec3;
+      text-align: center;
+    }
+    th {
+      background: #3a7bd5;
+      color: #fff;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      font-size: 14.5px;
+      color: #333;
+    }
+    .footer a {
+      color: #3a7bd5;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="bmi-info">
+    <b style="color:#3a7bd5; font-size:17px;">BMI چیست و چه کاربردی دارد؟</b>
+    <br>
+    <span>
+      شاخص توده بدنی یا <b>BMI</b> (مخفف <b>Body Mass Index</b>) معیاری ساده برای سنجش وضعیت وزنی است که با تقسیم وزن (بر حسب کیلوگرم) بر مجذور قد (بر حسب متر) به دست می‌آید. این شاخص به شما کمک می‌کند تا بدانید در محدوده وزن سالم، کمبود وزن، اضافه وزن یا چاقی قرار دارید. توجه داشته باشید که BMI فقط یک تخمین کلی است و میزان دقیق چربی بدن یا توزیع آن را نشان نمی‌دهد، اما ابزاری سریع و رایج برای ارزیابی وضعیت وزنی و تصمیم‌گیری درباره سلامت عمومی به شمار می‌رود.
+    </span>
+  </div>
+  <div class="container">
+    <h2>محاسبه شاخص توده بدنی (BMI)</h2>
+    <form onsubmit="event.preventDefault(); calculateBMI();">
+      <label for="height">قد (سانتی‌متر):</label>
+      <input type="number" id="height" min="50" max="250" step="0.1" required>
+      <label for="weight">وزن (کیلوگرم):</label>
+      <input type="number" id="weight" min="10" max="300" step="0.1" required>
+      <label for="age">سن:</label>
+      <input type="number" id="age" min="1" max="120" required>
+      <button type="submit">محاسبه</button>
+    </form>
+    <div id="result" aria-live="polite"></div>
+    <table>
+      <tr>
+        <th>وضعیت</th>
+        <th>محدوده BMI</th>
+      </tr>
+      <tr>
+        <td>کمبود وزن</td>
+        <td>کمتر از 18.5</td>
+      </tr>
+      <tr>
+        <td>وزن نرمال</td>
+        <td>18.5 - 24.9</td>
+      </tr>
+      <tr>
+        <td>اضافه وزن</td>
+        <td>25 - 29.9</td>
+      </tr>
+      <tr>
+        <td>چاقی</td>
+        <td>30 و بیشتر</td>
+      </tr>
+    </table>
+  </div>
+  <div class="footer">
+    طراحی <a href="https://github.com/Argh94" target="_blank">Argh94</a>
+  </div>
+  <script>
+    function calculateBMI() {
+      const heightCm = parseFloat(document.getElementById('height').value);
+      const weight = parseFloat(document.getElementById('weight').value);
+      const age = parseInt(document.getElementById('age').value);
+      const resultDiv = document.getElementById('result');
+
+      // پاک کردن نتیجه قبلی
+      resultDiv.innerHTML = '';
+      resultDiv.classList.remove('show');
+
+      // اعتبارسنجی
+      if (!heightCm || !weight || !age) {
+        resultDiv.innerText = 'لطفاً همه فیلدها را کامل وارد کنید.';
+        resultDiv.classList.add('show');
+        return;
+      }
+      if (heightCm < 50 || heightCm > 250 || weight < 10 || weight > 300 || age < 1 || age > 120) {
+        resultDiv.innerText = 'لطفاً مقادیر معتبر وارد کنید.';
+        resultDiv.classList.add('show');
+        return;
+      }
+
+      const heightM = heightCm / 100;
+      const bmi = weight / (heightM * heightM);
+      let status = '';
+      let message = '';
+      let sticker = '';
+
+      if (age < 18) {
+        // کودکان
+        status = 'کودک';
+        message = 'هی قهرمان کوچولو! BMI تو ' + bmi.toFixed(2) + ' هست. یه دکتر مهربون می‌تونه بگه بدنت چطوره!';
+        sticker = 'https://media.giphy.com/media/3o7aD2rXgIuK3iZ4Ri/giphy.gif'; // استیکر کودکانه
+      } else if (age > 65) {
+        // افراد مسن
+        status = 'بزرگسال مسن';
+        message = 'استاد بزرگ! BMI تو ' + bmi.toFixed(2) + ' هست. با یه پزشک مشورت کن تا همیشه سرحال باشی!';
+        sticker = 'https://media.giphy.com/media/l0Iyl55kTeh71nTWw/giphy.gif'; // استیکر خنده‌دار سالمند
+      } else {
+        // بزرگسالان
+        if (bmi < 18.5) {
+          status = 'کمبود وزن';
+          message = 'اوپس! انگار باد می‌تونه تو رو ببره! BMI تو ' + bmi.toFixed(2) + ' هست. یه کم غذای خوشمزه بخور!';
+          sticker = 'https://media.giphy.com/media/26gsjCZzpKLvpK3Wg/giphy.gif'; // استیکر لاغر
+        } else if (bmi < 25) {
+          status = 'وزن نرمال';
+          message = 'آفرین! BMI تو ' + bmi.toFixed(2) + ' هست. انگار بدنت مثل یه ماشین خوش‌تیپ کار می‌کنه!';
+          sticker = 'https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif'; // استیکر خوشحال
+        } else if (bmi < 30) {
+          status = 'اضافه وزن';
+          message = 'اووه! BMI تو ' + bmi.toFixed(2) + ' هست. یه کم ورزش کن، نذار جاذبه زمین حسادت کنه!';
+          sticker = 'https://media.giphy.com/media/3o6Zt6KHxJTbXCnSvu/giphy.gif'; // استیکر ورزش
+        } else {
+          status = 'چاقی';
+          message = 'ای وای! BMI تو ' + bmi.toFixed(2) + ' هست. نترکی یه وقت! یه رژیم باحال و ورزش شروع کن!';
+          sticker = 'https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif'; // استیکر خنده‌دار چاقی
+        }
+      }
+
+      resultDiv.innerHTML =
+        'سن: <b>' + age + '</b><br>' +
+        'BMI: <b>' + bmi.toFixed(2) + '</b><br>' +
+        'وضعیت: <span style="color:#3a7bd5;font-weight:bold;">' + status + '</span><br>' +
+        '<span>' + message + '</span><br>' +
+        '<img src="' + sticker + '" alt="استیکر نتیجه" class="sticker">';
+      resultDiv.classList.add('show');
+    }
+  </script>
+</body>
+</html>
